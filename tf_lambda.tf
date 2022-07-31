@@ -1,9 +1,10 @@
 resource "aws_lambda_function" "authentication_system_backend" {
-
   function_name = "authentication_system_backend"
   role          = aws_iam_role.authentication_system_lambda_role.arn
   memory_size   = 500
   timeout       = 10
+  handler       = "index.js"
+  runtime       = "nodejs14.x"
 }
 
 resource "aws_lambda_permission" "auth_system_rest_api_gateway_lambda_perm" {

@@ -58,7 +58,10 @@ resource "aws_api_gateway_integration_response" "health_get_method_integration_r
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT'",
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   }
-  depends_on = [aws_api_gateway_method_response.health_get_method_response_200]
+  depends_on = [
+    aws_api_gateway_method_response.health_get_method_response_200,
+    aws_api_gateway_integration.health_get_method_integration
+  ]
 }
 
 ## Other endpoints go here
@@ -69,7 +72,11 @@ resource "aws_api_gateway_integration_response" "health_get_method_integration_r
 resource "aws_api_gateway_deployment" "authentication_system_api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.authentication_system_rest_api_gateway.id
   triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.authentication_system_rest_api_gateway.body))
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_resource.authentication_system_api_health_resource.id,
+      aws_api_gateway_method.health_get_method.id,
+      aws_api_gateway_integration.health_get_method_integration.id
+    ]))
   }
   lifecycle {
     create_before_destroy = true
