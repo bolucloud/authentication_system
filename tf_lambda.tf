@@ -5,7 +5,7 @@ resource "aws_lambda_function" "authentication_system_backend" {
   timeout       = 10
   handler       = "index.js"
   runtime       = "nodejs14.x"
-  filename      = "auth-system-payload.zip"
+  filename      = "auth-system-payload-1.zip"
 }
 
 resource "aws_lambda_permission" "auth_system_rest_api_gateway_lambda_perm" {
