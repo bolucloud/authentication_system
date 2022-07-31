@@ -25,9 +25,9 @@ resource "aws_api_gateway_method_response" "health_get_method_response_200" {
   resource_id = aws_api_gateway_resource.authentication_system_api_health_resource.id
   http_method = aws_api_gateway_method.health_get_method.http_method
   status_code = "200"
-  response_models = {
-    "application/json" = "Empty"
-  }
+  #   response_models = {
+  #     "application/json" = "Empty"
+  #   }
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = true,
     "method.response.header.Access-Control-Allow-Methods" = true,
@@ -42,7 +42,7 @@ resource "aws_api_gateway_integration" "health_get_method_integration" {
   rest_api_id             = aws_api_gateway_rest_api.authentication_system_rest_api_gateway.id
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.authentication_system_backend.invoke_arn
-  integration_http_method = "POST"
+  integration_http_method = "GET"
   depends_on = [
     aws_api_gateway_method.health_get_method
   ]
@@ -55,7 +55,7 @@ resource "aws_api_gateway_integration_response" "health_get_method_integration_r
   status_code = aws_api_gateway_method_response.health_get_method_response_200.status_code
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS,POST,PUT'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'",
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   }
   depends_on = [

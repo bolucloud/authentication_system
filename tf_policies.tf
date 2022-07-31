@@ -7,3 +7,7 @@ data "aws_iam_policy" "CloudWatchLogsFullAccess" {
 data "aws_iam_policy" "AmazonDynamoDBFullAccess" {
   arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 }
+
+data "aws_iam_policy" "AmazonAPIGatewayInvokeFullAccess" {
+  arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess"
+}

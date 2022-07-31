@@ -3,7 +3,8 @@ resource "aws_iam_role" "authentication_system_lambda_role" {
 
   managed_policy_arns = [
     data.aws_iam_policy.CloudWatchLogsFullAccess.arn,
-    data.aws_iam_policy.AmazonDynamoDBFullAccess.arn
+    data.aws_iam_policy.AmazonDynamoDBFullAccess.arn,
+    data.aws_iam_policy.AmazonAPIGatewayInvokeFullAccess.arn
   ]
 
   assume_role_policy = jsonencode({
